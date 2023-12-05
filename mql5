@@ -1,0 +1,81 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                              Draw a Bow MT5      |
+//|                                   https://www.forexroboteasy.com |
+//|                                      Developed by Forex Robot Easy Team |
+//+------------------------------------------------------------------+
+
+// Global variables
+double LotSize = 0.01; // Initial lot size
+double Multiplier = 2; // Martingale multiplier
+int MaxTrades = 5; // Maximum number of trades to execute
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set up the necessary parameters and indicators
+    // ...
+
+    return INIT_SUCCEEDED;
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Clean up and release resources
+    // ...
+}
+
+//+------------------------------------------------------------------+
+//| Expert tick function                                             |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Check for trade opportunities
+    // ...
+
+    // Execute trades based on the martingale strategy
+    for(int i=0; i<MaxTrades; i++)
+    {
+        double tradeSize = LotSize * MathPow(Multiplier, i);
+        bool tradeResult = ExecuteTrade(tradeSize);
+
+        if(!tradeResult)
+            break; // Stop executing trades if a trade fails
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Function to execute trades based on the martingale strategy      |
+//+------------------------------------------------------------------+
+bool ExecuteTrade(const double lotSize)
+{
+    // Place a trade with the specified lot size
+    // ...
+
+    // Check trade outcome
+    bool tradeSuccess = CheckTradeOutcome();
+
+    // Adjust lot size for next trade based on outcome
+    if(tradeSuccess)
+        LotSize = lotSize;
+    else
+        LotSize *= Multiplier;
+
+    return tradeSuccess;
+}
+
+//+------------------------------------------------------------------+
+//| Function to check the outcome of a trade                         |
+//+------------------------------------------------------------------+
+bool CheckTradeOutcome()
+{
+    // Check if the trade was successful
+    // ...
+
+    return true; // Return true for a successful trade, false otherwise
+}
